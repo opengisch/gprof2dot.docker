@@ -15,4 +15,4 @@ COPY . .
 
 ENTRYPOINT make
 
-CMD render-profiles
+CMD clean render-profiles

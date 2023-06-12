@@ -1,8 +1,15 @@
-PROFILE_FILES = $(wildcard /data/*.prof)
-RENDERED_PROFILE_FILES = $(patsubst %.prof,%.png,$(PROFILE_FILES))
+WORKDIR=/data
+PROFILE_FILES = $(wildcard $(WORKDIR)/*.prof)
+PROFILE_FILES_NAMES = $(patsubst %.prof,%,$(PROFILE_FILES))
 
-$(RENDERED_PROFILE_FILES): $(PROFILE_FILES)
-	gprof2dot -f pstats $(patsubst %.png,%.prof,$@) | dot -Tpng -o $@
+%:%.prof
+	@echo target is $@, source is $<
+	gprof2dot -f pstats $< | dot -Tpng -o $@.png
 
 .PHONY: render-profiles
-render-profiles: $(RENDERED_PROFILE_FILES)
+render-profiles: $(PROFILE_FILES_NAMES)
+
+
+.PHONY: clean
+clean:
+	rm -rf $(WORKDIR)/*.png
