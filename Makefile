@@ -1,8 +1,8 @@
 WORKDIR=/data
-PROFILE_FILES = $(wildcard $(WORKDIR)/*.prof)
-PROFILE_FILES_NAMES = $(patsubst %.prof,%,$(PROFILE_FILES))
+PROFILE_FILES = $(wildcard $(WORKDIR)/*.pstat)
+PROFILE_FILES_NAMES = $(patsubst %.pstat,%,$(PROFILE_FILES))
 
-%:%.prof
+%:%.pstat
 	@echo target is $@, source is $<
 	gprof2dot -f pstats $< | dot -Tpng -o $@.png
 
